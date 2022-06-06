@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'directions.dart';
 
@@ -23,8 +24,17 @@ class _NavigationKeysState extends State<NavigationKeys> {
         children: [
           ArrowKey(
             icons: Icons.keyboard_arrow_up,
-            onTap: () {
+            onTapDown: (det) {
               updateDirection(Direction.up);
+            },
+            onTapUp: (dets) {
+              updateDirection(Direction.none);
+            },
+            onLongPressDown: () {
+              updateDirection(Direction.up);
+            },
+            onLongPressEnd: (dets) {
+              updateDirection(Direction.none);
             },
           ),
           Row(
@@ -32,22 +42,49 @@ class _NavigationKeysState extends State<NavigationKeys> {
             children: [
               ArrowKey(
                 icons: Icons.keyboard_arrow_left,
-                onTap: () {
+                onTapDown: (det) {
                   updateDirection(Direction.left);
+                },
+                onTapUp: (dets) {
+                  updateDirection(Direction.none);
+                },
+                onLongPressDown: () {
+                  updateDirection(Direction.left);
+                },
+                onLongPressEnd: (dets) {
+                  updateDirection(Direction.none);
                 },
               ),
               ArrowKey(
                 icons: Icons.keyboard_arrow_right,
-                onTap: () {
+                onTapDown: (det) {
                   updateDirection(Direction.right);
+                },
+                onTapUp: (dets) {
+                  updateDirection(Direction.none);
+                },
+                onLongPressDown: () {
+                  updateDirection(Direction.right);
+                },
+                onLongPressEnd: (dets) {
+                  updateDirection(Direction.none);
                 },
               ),
             ],
           ),
           ArrowKey(
             icons: Icons.keyboard_arrow_down,
-            onTap: () {
+            onTapDown: (det) {
               updateDirection(Direction.down);
+            },
+            onTapUp: (dets) {
+              updateDirection(Direction.none);
+            },
+            onLongPressDown: () {
+              updateDirection(Direction.down);
+            },
+            onLongPressEnd: (dets) {
+              updateDirection(Direction.none);
             },
           ),
         ],
@@ -65,15 +102,24 @@ class ArrowKey extends StatelessWidget {
   const ArrowKey({
     Key? key,
     required this.icons,
-    required this.onTap,
+    required this.onTapDown,
+    required this.onTapUp,
+    required this.onLongPressDown,
+    required this.onLongPressEnd,
   }) : super(key: key);
   final IconData icons;
-  final Function() onTap;
+  final Function(TapDownDetails) onTapDown;
+  final Function(TapUpDetails) onTapUp;
+  final Function() onLongPressDown;
+  final Function(LongPressEndDetails) onLongPressEnd;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onTap,
+      onTapDown: onTapDown,
+      onTapUp: onTapUp,
+      onLongPress: onLongPressDown,
+      onLongPressEnd: onLongPressEnd,
       child: Container(
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(

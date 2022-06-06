@@ -7,6 +7,7 @@ void main() {
   final game = DinoGame();
   runApp(
     MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Stack(
           children: [
